@@ -52,3 +52,27 @@ btn2.addEventListener("click", () => { // Add click event listener to moisture b
     sho2.innerHTML = moisture.toFixed(1) + "%"; // Display moisture percentage with 1 decimal place and % symbol
 
 });
+
+
+function calculatePSD() {
+    let inputs = document.querySelectorAll('.retained-input');
+    let cumRetainedCells = document.querySelectorAll('.cum-retained');
+    let passingCells = document.querySelectorAll('.passing');
+    
+    let runningTotal = 0;
+
+    for (let i = 0; i < inputs.length; i++) {
+        // Input se value lena (agar khali hai to 0 manna)
+        let retainedValue = parseFloat(inputs[i].value) || 0;
+        
+        // 1. Math for Cumulative % Retained (Pichla total + Naya input)
+        runningTotal += retainedValue;
+        cumRetainedCells[i].innerText = runningTotal.toFixed(2);
+        
+        // 2. Math for % Passing (100 - Cumulative Total)
+        let passingValue = 100 - runningTotal;
+        // Agar value 0 se niche jaye to 0 dikhaye
+        if(passingValue < 0) passingValue = 0; 
+        passingCells[i].innerText = passingValue.toFixed(2);
+    }
+}

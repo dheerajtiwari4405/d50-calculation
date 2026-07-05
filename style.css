@@ -7,7 +7,7 @@ body{
     font-family: 'Poppins', sans-serif;
     background: #f5f5f5;
 }
-.container{
+.container1{
     width: 50%;
     height: 70%;
     display: flex;
@@ -18,7 +18,7 @@ body{
     border: 2px solid #000;
     padding: 50px;
     margin: 100px auto;
-    background: #9744e9;
+    background: #66b5dc;
     border-radius: 10px;
 }
 #d50-show1{
@@ -29,7 +29,8 @@ body{
     align-items: center;
     justify-content: center;
     display: flex;
-    background: #939e39;
+    background: #7e5252;
+    box-shadow: 4px 4px 15px rgba(0,0,0,0.6);
 }
 #d50-show2{
     width: 100%;
@@ -39,7 +40,8 @@ body{
     align-items: center;
     justify-content: center;
     display: flex;
-    background: #939e39;
+    background: #7e5252;
+    box-shadow: 4px 4px 15px rgba(0,0,0,0.6);
 }
 .inp1{
     font-size: 20px;
@@ -77,9 +79,10 @@ body{
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.8);
 }
 @media (max-width: 768px) {
-    .container{
+    .container1{
         width: 90%;
         height: auto;
         padding: 20px;
@@ -102,7 +105,7 @@ body{
     }
 }
 @media screen and (max-width: 480px) {
-    .container{
+    .container1{
         width: 100%;
         height: auto;
         padding: 10px;
@@ -124,3 +127,58 @@ body{
         font-size: 14px;
     }
 }
+
+
+.container2 {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #66b5dc;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #2ecc71;
+            color: white;
+        }
+        tr:nth-child(even) { background-color: #7e5252; }
+        input[type="number"] {
+            width: 80px;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .result-cell {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        button {
+            display: block;
+            width: 200px;
+            margin: 20px auto 0;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+             box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+        }
+        button:hover { background-color: #2980b9; }

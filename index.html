@@ -8,34 +8,64 @@
 
 </head>
 <body>
+    <h1 style="text-align:center; color:#214345; font-family: Arial, sans-serif; font-size: 40px; border: 2px solid #000; padding: 10px; border-radius: 10px; margin-top: 15px; background: #bb607c;">Welcome to our Calculation</h1>
                                 <!-- part-1 d50 -->
-    <div class="container">
+    <div class="container1">
         <h1 id="d50-show1"> D50 Calculation</h1>
         <div class="inp1">
-        <label for="input1"> 35 mesh value type</label>
+        <label for="input1"> 35 Mesh Value Type</label>
         <input type="number" class="input1" id="input1" placeholder="type here correct value">
         </div>
         <div class="inp2">
-            <label for="input2"> 60 mesh value type</label>
+            <label for="input2"> 60 Mesh Value Type</label>
             <input type="number" class="input2" id="input2" placeholder="type here correct value">
         </div>
         <button class="button" id="d50-button">Show Result</button>
 
     </div>
                                  <!-- part-2 moisture -->
-     <div class="container">
+     <div class="container1">
         <h1 id="d50-show2"> Moisture Calc..</h1>
         <div class="inp1">
-        <label for="input1"> first weight</label>
+        <label for="input1"> First weight</label>
         <input type="number" class="input1" id="input1m" placeholder="type here correct value">
         </div>
         <div class="inp2">
-            <label for="input2"> second weight</label>
+            <label for="input2"> Second Weight</label>
             <input type="number" class="input2" id="input2m" placeholder="type here correct value">
         </div>
         <button class="button" id="moisture-button">Show Result</button>
 
     </div>
-</body>
+                                        <!-- part 3 -->
+
+<div class="container2">
+    <h2>Pregel Starch - PSD Sieve Analyzer</h2>
+    <p style="text-align:center; color:#58245e;">Enter value & show result </p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Mesh Size</th>
+                <th>% Retained (Input)</th>
+                <th>Cumulative % Retained</th>
+                <th>% Passing</th>
+            </tr>
+        </thead>
+        <tbody id="sieve-table">
+            <tr><td>20</td><td><input type="number" class="retained-input" value="0" step="0.01"></td><td class="cum-retained result-cell">0.00</td><td class="passing result-cell">100.00</td></tr>
+            <tr><td>30</td><td><input type="number" class="retained-input" value="0" step="0.01"></td><td class="cum-retained result-cell">0.00</td><td class="passing result-cell">100.00</td></tr>
+            <tr><td>35</td><td><input type="number" class="retained-input" value="0" step="0.01"></td><td class="cum-retained result-cell">0.00</td><td class="passing result-cell">100.00</td></tr>
+            <tr><td>40</td><td><input type="number" class="retained-input" value="0" step="0.01"></td><td class="cum-retained result-cell">0.00</td><td class="passing result-cell">100.00</td></tr>
+            <tr><td>50</td><td><input type="number" class="retained-input" value="0" step="0.01"></td><td class="cum-retained result-cell">0.00</td><td class="passing result-cell">100.00</td></tr>
+            <tr><td>60</td><td><input type="number" class="retained-input" value="0" step="0.01"></td><td class="cum-retained result-cell">0.00</td><td class="passing result-cell">100.00</td></tr>
+            <tr><td>100</td><td><input type="number" class="retained-input" value="0" step="0.01"></td><td class="cum-retained result-cell">0.00</td><td class="passing result-cell">100.00</td></tr>
+            <tr><td>140</td><td><input type="number" class="retained-input" value="0" step="0.01"></td><td class="cum-retained result-cell">0.00</td><td class="passing result-cell">100.00</td></tr>
+            <tr><td>200</td><td><input type="number" class="retained-input" value="0" step="0.01"></td><td class="cum-retained result-cell">0.00</td><td class="passing result-cell">100.00</td></tr>
+        </tbody>
+    </table>
+        <button id="calculate-button" onclick="calculatePSD()">Calculate</button>
+
+    </body>
 <script src="script.js"></script>
 </html>
