@@ -54,13 +54,14 @@ btn2.addEventListener("click", () => { // Add click event listener to moisture b
 });
 
 
-function calculatePSD() {
     let inputs = document.querySelectorAll('.retained-input');
     let cumRetainedCells = document.querySelectorAll('.cum-retained');
     let passingCells = document.querySelectorAll('.passing');
+    let calculateButton = document.getElementById('calPSD');
     
     let runningTotal = 0;
-
+    calculateButton.addEventListener('click', ()=>{
+    runningTotal = 0; // Reset running total on each input change   
     for (let i = 0; i < inputs.length; i++) {
         // Input se value lena (agar khali hai to 0 manna)
         let retainedValue = parseFloat(inputs[i].value) || 0;
@@ -75,4 +76,4 @@ function calculatePSD() {
         if(passingValue < 0) passingValue = 0; 
         passingCells[i].innerText = passingValue.toFixed(2);
     }
-}
+});
