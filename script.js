@@ -1,79 +1,534 @@
-// d50 logic math
-let sho1 = document.getElementById("d50-show1"); // Get the element to display d50 result
-const btn1 = document.getElementById("d50-button"); // Get the d50 calculate button
+/* ==========================================================
+                D50 CALCULATION SECTION
+========================================================== */
 
-btn1.addEventListener("click", () => { // Add click event listener to d50 button
-    let inp1 = document.getElementById("input1").value.trim(); // Get first input value and remove whitespace
-    if(inp1 === ""){ // Check if input is empty
-        alert("Enter The Value"); // Show alert message if empty
-        return; // Exit function early
+/*
+    Result show karne wala heading
+*/
+const d50Result = document.getElementById("d50-show1");
+
+/*
+    Calculate button
+*/
+const d50Button = document.getElementById("d50-button");
+
+/*
+==========================================================
+        D50 Calculate Function
+==========================================================
+*/
+
+function calculateD50() {
+
+    /* -----------------------------
+        Input Values
+    ------------------------------ */
+
+    const mesh35 = document.getElementById("input1");
+    const mesh60 = document.getElementById("input2");
+
+
+    /* -----------------------------
+        Empty Validation
+    ------------------------------ */
+
+    if (mesh35.value.trim() === "") {
+
+        alert("Please Enter 35 Mesh Value.");
+
+        mesh35.focus();
+
+        return;
     }
-    inp1 = parseFloat(inp1); // Convert input string to float number
-    
-    let inp2 = document.getElementById("input2").value.trim(); // Get second input value and remove whitespace
-    if(inp2 === ""){ // Check if input is empty
-        alert("Enter The Value"); // Show alert message if empty
-        return; // Exit function early
+
+    if (mesh60.value.trim() === "") {
+
+        alert("Please Enter 60 Mesh Value.");
+
+        mesh60.focus();
+
+        return;
     }
-    inp2 = parseFloat(inp2); // Convert input string to float number
 
-    let numerator = 50 - inp2; // Calculate numerator (50 minus second input)
-    let denominator = inp1 - inp2; // Calculate denominator (first input minus second input)
-    let division = numerator / denominator; // Divide numerator by denominator
-    let fixdivision = parseFloat(division.toFixed(3)); // Round division to 3 decimal places and convert to float
-    let d50m = 250 * fixdivision; // Multiply rounded division by 250
-    let d50p = 250 + d50m; // Add 250 to get final d50 value
-    sho1.innerHTML = d50p.toFixed(1); // Display result with 1 decimal place
-})
 
-// moister logic 
+    /* -----------------------------
+        String → Number
+    ------------------------------ */
 
-let sho2 = document.getElementById("d50-show2"); // Get the element to display moisture result
-const btn2 = document.getElementById("moisture-button"); // Get the moisture calculate button
+    const value35 = parseFloat(mesh35.value);
 
-btn2.addEventListener("click", () => { // Add click event listener to moisture button
-    let inp1m = document.getElementById("input1m").value.trim(); // Get first moisture input value and remove whitespace
-    if(inp1m === ""){ // Check if input is empty
-        alert("Enter The Value"); // Show alert message if empty
-        return; // Exit function early
+    const value60 = parseFloat(mesh60.value);
+
+
+    /* -----------------------------
+        Number Validation
+    ------------------------------ */
+
+    if (isNaN(value35) || isNaN(value60)) {
+
+        alert("Please Enter Valid Numbers.");
+
+        return;
     }
-    inp1m = parseFloat(inp1m); // Convert input string to float number
-    
-    let inp2m = document.getElementById("input2m").value.trim(); // Get second moisture input value and remove whitespace
-    if(inp2m === ""){ // Check if input is empty
-        alert("Enter The Value"); // Show alert message if empty
-        return; // Exit function early
-    }
-    inp2m = parseFloat(inp2m); // Convert input string to float number
 
-    let numeratorm = inp1m - inp2m; // Calculate moisture numerator (first input minus second input)
-    let divisionm = numeratorm / inp1m; // Divide numerator by first input to get moisture ratio
-    let moisture = divisionm * 100; // Multiply by 100 to convert ratio to percentage
-    sho2.innerHTML = moisture.toFixed(1) + "%"; // Display moisture percentage with 1 decimal place and % symbol
+
+    /* -----------------------------
+        Denominator Check
+    ------------------------------ */
+
+    const denominator = value35 - value60;
+
+    if (denominator === 0) {
+
+        alert("35 Mesh and 60 Mesh Value Cannot Be Same.");
+
+        return;
+    }
+
+
+    /* ==================================================
+            D50 Formula
+    ================================================== */
+
+    const numerator = 50 - value60;
+
+    const division = numerator / denominator;
+
+    const d50 = 250 + (250 * division);
+
+
+    /* ==================================================
+            Result Color
+    ================================================== */
+
+    if (d50 >= 0) {
+
+        d50Result.style.color = "#00ff88";
+
+    } else {
+
+        d50Result.style.color = "#ff4d4d";
+
+    }
+
+
+    /* ==================================================
+            Show Result
+    ================================================== */
+
+    d50Result.innerHTML = `
+        D50 : <span>${d50.toFixed(1)}</span>
+    `;
+
+}
+
+
+/*
+==========================================================
+        Button Click Event
+==========================================================
+*/
+
+d50Button.addEventListener("click", calculateD50);
+
+
+/*
+==========================================================
+        Enter Key Support
+==========================================================
+*/
+
+document.getElementById("input1").addEventListener("keydown", function (event) {
+
+    if (event.key === "Enter") {
+
+        calculateD50();
+
+    }
 
 });
 
 
-    let inputs = document.querySelectorAll('.retained-input');
-    let cumRetainedCells = document.querySelectorAll('.cum-retained');
-    let passingCells = document.querySelectorAll('.passing');
-    let calculateButton = document.getElementById('calPSD');
-    
+document.getElementById("input2").addEventListener("keydown", function (event) {
+
+    if (event.key === "Enter") {
+
+        calculateD50();
+
+    }
+
+});
+/* ==========================================================
+                MOISTURE CALCULATION SECTION
+========================================================== */
+
+/*
+==========================================================
+        Required Elements
+==========================================================
+*/
+
+// Result Heading
+const moistureResult = document.getElementById("d50-show2");
+
+// Calculate Button
+const moistureButton = document.getElementById("moisture-button");
+
+// First Weight Input
+const firstWeightInput = document.getElementById("input1m");
+
+// Second Weight Input
+const secondWeightInput = document.getElementById("input2m");
+
+
+/*
+==========================================================
+        Moisture Calculate Function
+==========================================================
+*/
+
+function calculateMoisture() {
+
+    /* -----------------------------------
+            Empty Validation
+    ------------------------------------ */
+
+    if (firstWeightInput.value.trim() === "") {
+
+        alert("Please Enter First Weight.");
+
+        firstWeightInput.focus();
+
+        return;
+    }
+
+    if (secondWeightInput.value.trim() === "") {
+
+        alert("Please Enter Second Weight.");
+
+        secondWeightInput.focus();
+
+        return;
+    }
+
+
+    /* -----------------------------------
+            Convert String to Number
+    ------------------------------------ */
+
+    const firstWeight = parseFloat(firstWeightInput.value);
+
+    const secondWeight = parseFloat(secondWeightInput.value);
+
+
+    /* -----------------------------------
+            Number Validation
+    ------------------------------------ */
+
+    if (isNaN(firstWeight) || isNaN(secondWeight)) {
+
+        alert("Please Enter Valid Numbers.");
+
+        return;
+    }
+
+
+    /* -----------------------------------
+            Logical Validation
+    ------------------------------------ */
+
+    if (firstWeight <= 0) {
+
+        alert("First Weight Must Be Greater Than Zero.");
+
+        firstWeightInput.focus();
+
+        return;
+    }
+
+    if (secondWeight > firstWeight) {
+
+        alert("Second Weight Cannot Be Greater Than First Weight.");
+
+        secondWeightInput.focus();
+
+        return;
+    }
+
+
+    /* -----------------------------------
+            Moisture Formula
+    ------------------------------------ */
+
+    const moisture =
+        ((firstWeight - secondWeight) / firstWeight) * 100;
+
+
+    /* -----------------------------------
+            Result Color
+    ------------------------------------ */
+
+    if (moisture <= 10) {
+
+        moistureResult.style.color = "#00ff99";
+
+    }
+
+    else if (moisture <= 15) {
+
+        moistureResult.style.color = "#ffd43b";
+
+    }
+
+    else {
+
+        moistureResult.style.color = "#ff4d4d";
+
+    }
+
+
+    /* -----------------------------------
+            Show Result
+    ------------------------------------ */
+
+    moistureResult.innerHTML = `
+        Moisture : <span>${moisture.toFixed(2)} %</span>
+    `;
+
+}
+
+
+/*
+==========================================================
+        Button Event
+==========================================================
+*/
+
+moistureButton.addEventListener("click", calculateMoisture);
+
+
+/*
+==========================================================
+        Enter Key Support
+==========================================================
+*/
+
+firstWeightInput.addEventListener("keydown", function (event) {
+
+    if (event.key === "Enter") {
+
+        calculateMoisture();
+
+    }
+
+});
+
+
+secondWeightInput.addEventListener("keydown", function (event) {
+
+    if (event.key === "Enter") {
+
+        calculateMoisture();
+
+    }
+
+});
+/* =====================================================
+                PSD ANALYZER
+===================================================== */
+
+const retainedInputs = document.querySelectorAll(".retained-input");
+
+const cumulativeCells = document.querySelectorAll(".cum-retained");
+
+const passingCells = document.querySelectorAll(".passing");
+
+const calculatePSD = document.getElementById("calPSD");
+
+const totalRetained = document.getElementById("total-retained");
+
+const totalPassing = document.getElementById("total-passing");
+
+const psdStatus = document.getElementById("psd-status");
+
+
+function calculatePSDResult(){
+
     let runningTotal = 0;
-    calculateButton.addEventListener('click', ()=>{
-    runningTotal = 0; // Reset running total on each input change   
-    for (let i = 0; i < inputs.length; i++) {
-        // Input se value lena (agar khali hai to 0 manna)
-        let retainedValue = parseFloat(inputs[i].value) || 0;
-        
-        // 1. Math for Cumulative % Retained (Pichla total + Naya input)
-        runningTotal += retainedValue;
-        cumRetainedCells[i].innerText = runningTotal.toFixed(2);
-        
-        // 2. Math for % Passing (100 - Cumulative Total)
-        let passingValue = 100 - runningTotal;
-        // Agar value 0 se niche jaye to 0 dikhaye
-        if(passingValue < 0) passingValue = 0; 
-        passingCells[i].innerText = passingValue.toFixed(2);
+
+    for(let i = 0; i < retainedInputs.length; i++){
+
+        const retained = parseFloat(retainedInputs[i].value) || 0;
+
+        runningTotal += retained;
+
+        cumulativeCells[i].innerHTML = runningTotal.toFixed(2);
+
+        let passing = 100 - runningTotal;
+
+        if(passing < 0){
+
+            passing = 0;
+
+        }
+
+        passingCells[i].innerHTML = passing.toFixed(2);
+
     }
+
+    totalRetained.innerHTML = runningTotal.toFixed(2);
+
+    totalPassing.innerHTML = (100-runningTotal).toFixed(2);
+
+
+
+
+    if(runningTotal === 100){
+
+        psdStatus.innerHTML="✅ Perfect (100%)";
+
+        psdStatus.style.color="#00ff99";
+
+    }
+
+    else if(runningTotal < 100){
+
+        psdStatus.innerHTML="⚠ Remaining Value Missing";
+
+        psdStatus.style.color="#ffd43b";
+
+    }
+
+    else{
+
+        psdStatus.innerHTML="❌ Total Greater Than 100";
+
+        psdStatus.style.color="#ff4d4d";
+
+    }
+
+}
+
+
+/* ======================================
+        Button Event
+====================================== */
+
+calculatePSD.addEventListener("click",calculatePSDResult);
+
+
+
+/* ======================================
+        Auto Calculate
+====================================== */
+
+retainedInputs.forEach(function(input){
+
+    input.addEventListener("input",calculatePSDResult);
+
 });
+/* ==========================================
+        RESET BUTTON
+========================================== */
+
+const resetButton = document.getElementById("resetAll");
+
+resetButton.addEventListener("click", resetAll);
+
+function resetAll(){
+
+    /* D50 */
+
+    document.getElementById("input1").value="";
+
+    document.getElementById("input2").value="";
+
+    d50Result.innerHTML="D50 Calculation";
+
+    d50Result.style.color="white";
+
+
+    /* Moisture */
+
+    document.getElementById("input1m").value="";
+
+    document.getElementById("input2m").value="";
+
+    moistureResult.innerHTML="Moisture Calculation";
+
+    moistureResult.style.color="white";
+
+
+    /* PSD */
+
+    retainedInputs.forEach(function(input){
+
+        input.value=0;
+
+    });
+
+    calculatePSDResult();
+
+}
+/* ==========================================
+        PRINT REPORT
+========================================== */
+
+const printButton = document.getElementById("printReport");
+
+printButton.addEventListener("click",()=>{
+
+    window.print();
+
+});
+/* ==========================================
+        AUTO SAVE
+========================================== */
+
+const allInputs=document.querySelectorAll("input");
+
+allInputs.forEach(function(input){
+
+    input.addEventListener("input",()=>{
+
+        localStorage.setItem(input.id || input.className,input.value);
+
+    });
+
+});
+
+
+window.addEventListener("load",()=>{
+
+    allInputs.forEach(function(input){
+
+        let value=localStorage.getItem(input.id || input.className);
+
+        if(value!==null){
+
+            input.value=value;
+
+        }
+
+    });
+
+});
+function markInput(input,isValid){
+
+    input.classList.remove("success");
+
+    input.classList.remove("error");
+
+    if(isValid){
+
+        input.classList.add("success");
+
+    }
+
+    else{
+
+        input.classList.add("error");
+
+    }
+
+}
