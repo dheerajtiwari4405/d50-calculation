@@ -410,7 +410,7 @@ td{
 
     background:rgba(255,255,255,.15);
 
-    color:white;
+    color:rgb(35, 13, 13);
 
     text-align:center;
 
@@ -570,7 +570,7 @@ td{
 
     backdrop-filter:blur(12px);
 
-    color:white;
+    color:rgb(15, 10, 10);
 
     text-align:center;
 
