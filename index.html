@@ -26,7 +26,15 @@
         <p>D50 • Moisture • PSD Sieve Analyzer</p>
     </header>
 
+    <!-- ==========================================
+        THEME BUTTON
+========================================== -->
 
+    <button id="themeToggle" class="theme-btn">
+
+        🌙 Dark Mode
+
+    </button>
 
     <!-- =========================================
                 MAIN CONTAINER
@@ -305,6 +313,20 @@
                 <p><strong>Status :</strong> <span id="psd-status">Waiting...</span></p>
 
             </div>
+            <!-- =============== PSD GRAPH========================== -->
+
+            <div class="graph-card">
+
+                <h3>PSD Analysis Graph</h3>
+
+                <canvas id="psdChart"></canvas>
+
+            </div>
+            <button id="downloadGraph" class="btn">
+
+                Download Graph
+
+            </button>
 
         </section>
 
@@ -322,13 +344,15 @@
                 </button>
 
             </div>
+            <!-- =============== TOAST NOTIFICATION ================ -->
+
+            <div id="toast"></div>
 
 
+ <!-- ==============================CHART.JS LIBRARY================================= -->
 
-    <!-- JavaScript -->
-
-    <script src="script.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <!-- JavaScript -->
+        <script src="script.js"></script>
 </body>
-
 </html>

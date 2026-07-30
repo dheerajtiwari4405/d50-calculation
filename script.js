@@ -34,7 +34,7 @@ function calculateD50() {
 
     if (mesh35.value.trim() === "") {
 
-        alert("Please Enter 35 Mesh Value.");
+        showToast("Please Enter 35 Mesh Value.", "warning");
 
         mesh35.focus();
 
@@ -43,12 +43,14 @@ function calculateD50() {
 
     if (mesh60.value.trim() === "") {
 
-        alert("Please Enter 60 Mesh Value.");
+        ashowToast("Please Enter 60 Mesh Value.", "warning");
 
         mesh60.focus();
 
         return;
     }
+
+    showToast("Calculation Completed","success");
 
 
     /* -----------------------------
@@ -66,7 +68,7 @@ function calculateD50() {
 
     if (isNaN(value35) || isNaN(value60)) {
 
-        alert("Please Enter Valid Numbers.");
+        showToast("Invalid Number","error");
 
         return;
     }
@@ -366,11 +368,7 @@ function calculatePSDResult(){
 
         let passing = 100 - runningTotal;
 
-        if(passing < 0){
-
-            passing = 0;
-
-        }
+        passing = Math.max(0, Math.min(100, passing));
 
         passingCells[i].innerHTML = passing.toFixed(2);
 
@@ -406,6 +404,21 @@ function calculatePSDResult(){
         psdStatus.style.color="#ff4d4d";
 
     }
+    /* ==========================================
+        UPDATE GRAPH
+========================================== */
+
+const graphValues = [];
+
+passingCells.forEach((cell) => {
+
+    graphValues.push(parseFloat(cell.innerHTML));
+
+});
+
+psdChart.data.datasets[0].data = graphValues;
+
+psdChart.update();
 
 }
 
@@ -416,7 +429,178 @@ function calculatePSDResult(){
 
 calculatePSD.addEventListener("click",calculatePSDResult);
 
+/* ==========================================
+        PREMIUM PSD CHART
+========================================== */
 
+const ctx = document
+    .getElementById("psdChart")
+    .getContext("2d");
+
+/* Gradient Line */
+
+const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+
+gradient.addColorStop(0, "#00e5ff");
+gradient.addColorStop(0.5, "#00c853");
+gradient.addColorStop(1, "#2962ff");
+
+
+const psdChart = new Chart(ctx, {
+
+    type: "line",
+
+    data: {
+
+        labels: [
+            "20",
+            "30",
+            "35",
+            "40",
+            "50",
+            "60",
+            "100",
+            "140",
+            "200"
+        ],
+
+        datasets: [{
+
+            label: "% Passing",
+
+            data: [100,100,100,100,100,100,100,100,100],
+
+            borderColor: gradient,
+
+            backgroundColor: "rgba(0,180,255,.20)",
+
+            borderWidth: 4,
+
+            fill: true,
+
+            tension: .45,
+
+            pointRadius: 6,
+
+            pointHoverRadius: 9,
+
+            pointBackgroundColor: "#ffffff",
+
+            pointBorderColor: "#0088ff",
+
+            pointBorderWidth: 3
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        animation: {
+
+            duration: 1800,
+
+            easing: "easeInOutQuart"
+
+        },
+
+        interaction: {
+
+            intersect: false,
+
+            mode: "index"
+
+        },
+
+        plugins: {
+
+            legend: {
+
+                labels: {
+
+                    font: {
+
+                        size: 15,
+
+                        weight: "bold"
+
+                    }
+
+                }
+
+            },
+
+            tooltip: {
+
+                backgroundColor: "#222",
+
+                titleColor: "#fff",
+
+                bodyColor: "#fff",
+
+                padding: 12
+
+            }
+
+        },
+
+        scales: {
+
+            y: {
+
+                min: 0,
+
+                max: 100,
+
+                title: {
+
+                    display: true,
+
+                    text: "% Passing"
+
+                }
+
+            },
+
+            x: {
+
+                title: {
+
+                    display: true,
+
+                    text: "Mesh Size"
+
+                }
+
+            }
+
+        }
+
+    }
+
+});
+/* ==========================================
+        DOWNLOAD GRAPH
+========================================== */
+
+const downloadGraph =
+document.getElementById("downloadGraph");
+
+downloadGraph.addEventListener("click", () => {
+
+    const link = document.createElement("a");
+
+    link.download = "PSD_Graph.png";
+
+    link.href = psdChart.toBase64Image();
+
+    link.click();
+
+});
 
 /* ======================================
         Auto Calculate
@@ -427,6 +611,7 @@ retainedInputs.forEach(function(input){
     input.addEventListener("input",calculatePSDResult);
 
 });
+
 /* ==========================================
         RESET BUTTON
 ========================================== */
@@ -532,3 +717,99 @@ function markInput(input,isValid){
     }
 
 }
+/* ==========================================
+        TOAST FUNCTION
+========================================== */
+
+const toast = document.getElementById("toast");
+
+function showToast(message,type="info"){
+
+    toast.innerHTML = message;
+
+    toast.className = "";
+
+    toast.classList.add("show");
+
+    switch(type){
+
+        case "success":
+
+            toast.classList.add("toast-success");
+
+        break;
+
+        case "error":
+
+            toast.classList.add("toast-error");
+
+        break;
+
+        case "warning":
+
+            toast.classList.add("toast-warning");
+
+        break;
+
+        default:
+
+            toast.classList.add("toast-info");
+
+    }
+
+    setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+    },3000);
+
+}
+showToast("PDF Downloaded Successfully","success");
+
+
+
+
+/* ==========================================
+        DARK / LIGHT MODE
+========================================== */
+
+const themeButton =
+document.getElementById("themeToggle");
+
+/* Load Saved Theme */
+
+if(localStorage.getItem("theme")==="dark"){
+
+    document.body.classList.add("dark");
+
+    themeButton.innerHTML="☀️ Light Mode";
+
+}
+
+/* Button Click */
+
+themeButton.addEventListener("click",()=>{
+
+    document.body.classList.toggle("dark");
+
+    if(document.body.classList.contains("dark")){
+
+        localStorage.setItem("theme","dark");
+
+        themeButton.innerHTML="☀️ Light Mode";
+
+        showToast("Dark Mode Enabled","success");
+
+    }
+
+    else{
+
+        localStorage.setItem("theme","light");
+
+        themeButton.innerHTML="🌙 Dark Mode";
+
+        showToast("Light Mode Enabled","info");
+
+    }
+
+});

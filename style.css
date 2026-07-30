@@ -577,6 +577,50 @@ td{
 
 }
 /* ==========================================
+        PREMIUM GRAPH CARD
+========================================== */
+
+.graph-card{
+
+    margin-top:35px;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.90);
+
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+
+    transition:.4s;
+
+}
+
+.graph-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 25px 60px rgba(0,0,0,.35);
+
+}
+
+.graph-card h3{
+
+    text-align:center;
+
+    color:#214345;
+
+    margin-bottom:25px;
+
+}
+#psdChart{
+
+    width:100%;
+
+    height:450px !important;
+
+}
+/* ==========================================
         ACTION BUTTONS
 ========================================== */
 
@@ -661,5 +705,218 @@ td{
         display:none;
 
     }
+
+}
+/* ==========================================
+        TOAST NOTIFICATION
+========================================== */
+
+#toast{
+
+    position:fixed;
+
+    top:25px;
+
+    right:25px;
+
+    min-width:280px;
+
+    max-width:350px;
+
+    padding:15px 20px;
+
+    border-radius:12px;
+
+    color:#fff;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    opacity:0;
+
+    transform:translateX(120%);
+
+    transition:.4s ease;
+
+    z-index:99999;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+
+}
+
+/* Show Toast */
+
+#toast.show{
+
+    opacity:1;
+
+    transform:translateX(0);
+
+}
+
+/* Success */
+
+.toast-success{
+
+    background:linear-gradient(135deg,#00c853,#00e676);
+
+}
+
+/* Error */
+
+.toast-error{
+
+    background:linear-gradient(135deg,#d50000,#ff5252);
+
+}
+
+/* Warning */
+
+.toast-warning{
+
+    background:linear-gradient(135deg,#ff9800,#ffc107);
+
+}
+
+/* Info */
+
+.toast-info{
+
+    background:linear-gradient(135deg,#0288d1,#03a9f4);
+
+}
+
+/* ==========================================
+        THEME BUTTON
+========================================== */
+
+.theme-btn{
+
+    position:fixed;
+
+    top:20px;
+
+    right:20px;
+
+    padding:12px 20px;
+
+    border:none;
+
+    border-radius:30px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    color:#fff;
+
+    background:linear-gradient(135deg,#0072ff,#00c6ff);
+
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+
+    transition:.3s;
+
+    z-index:9999;
+
+}
+
+.theme-btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+
+/* ==========================================
+        SMOOTH TRANSITION
+========================================== */
+
+body,
+.card,
+.input-box,
+button,
+table,
+th,
+td{
+
+    transition:.4s;
+
+}
+
+
+/* ==========================================
+        DARK THEME
+========================================== */
+
+body.dark{
+
+    background:#0f172a;
+
+}
+
+body.dark .card{
+
+    background:rgba(20,30,48,.92);
+
+    color:#fff;
+
+}
+
+body.dark .card h2,
+body.dark .card h3,
+body.dark label{
+
+    color:#fff;
+
+}
+
+body.dark .input-box{
+
+    background:#1e293b;
+
+    color:#fff;
+
+    border:1px solid #3b82f6;
+
+}
+
+body.dark table{
+
+    color:#fff;
+
+}
+
+body.dark td{
+
+    background:#1e293b;
+
+    color:#fff;
+
+}
+
+body.dark th{
+
+    background:#2563eb;
+
+}
+
+body.dark .particle-box{
+
+    background:#1e293b;
+
+}
+
+body.dark .graph-card{
+
+    background:#1e293b;
+
+}
+
+body.dark .psd-result{
+
+    background:#1e293b;
 
 }
