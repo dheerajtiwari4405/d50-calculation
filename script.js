@@ -735,7 +735,7 @@ function markInput(input,isValid){
 
 const toast = document.getElementById("toast");
 
-function showToast(message,type="info"){
+function showToast(message, type = "info") {
 
     toast.innerHTML = message;
 
@@ -743,88 +743,34 @@ function showToast(message,type="info"){
 
     toast.classList.add("show");
 
-    switch(type){
+    switch (type) {
 
         case "success":
-
             toast.classList.add("toast-success");
-
-        break;
+            break;
 
         case "error":
-
             toast.classList.add("toast-error");
-
-        break;
+            break;
 
         case "warning":
-
             toast.classList.add("toast-warning");
-
-        break;
+            break;
 
         default:
-
             toast.classList.add("toast-info");
 
     }
 
-    setTimeout(()=>{
+    setTimeout(() => {
 
         toast.classList.remove("show");
 
-    },3000);
-
-}
-showToast("PDF Downloaded Successfully","success");
-
-
-
-
-/* ==========================================
-        DARK / LIGHT MODE
-========================================== */
-
-const themeButton =
-document.getElementById("themeToggle");
-
-/* Load Saved Theme */
-
-if(localStorage.getItem("theme")==="dark"){
-
-    document.body.classList.add("dark");
-
-    themeButton.innerHTML="☀️ Light Mode";
+    }, 3000);
 
 }
 
-/* Button Click */
-
-themeButton.addEventListener("click",()=>{
-
-    document.body.classList.toggle("dark");
-
-    if(document.body.classList.contains("dark")){
-
-        localStorage.setItem("theme","dark");
-
-        themeButton.innerHTML="☀️ Light Mode";
-
-        showToast("Dark Mode Enabled","success");
-
-    }
-
-    else{
-
-        localStorage.setItem("theme","light");
-
-        themeButton.innerHTML="🌙 Dark Mode";
-
-        showToast("Light Mode Enabled","info");
-
-    }
-
-});
+showToast("Welcome To Lab Calculation","success");
 
 let newWorker;
 
@@ -879,7 +825,7 @@ navigator.serviceWorker.addEventListener("controllerchange", () => {
 });
 
 
-let installPrompt;
+let installPrompt = null;
 
 window.addEventListener("beforeinstallprompt", (event) => {
 
@@ -887,16 +833,35 @@ window.addEventListener("beforeinstallprompt", (event) => {
 
     installPrompt = event;
 
+    // Install button show karo
+    document.getElementById("installApp").style.display = "inline-flex";
+
+    console.log("Install Available");
+
 });
 
 document.getElementById("installApp").addEventListener("click", async () => {
 
-    if (!installPrompt) return;
+    if (!installPrompt) {
+
+        alert("App Install Not Available Yet");
+
+        return;
+
+    }
 
     installPrompt.prompt();
 
-    await installPrompt.userChoice;
+    const choice = await installPrompt.userChoice;
+
+    if (choice.outcome === "accepted") {
+
+        console.log("Installed");
+
+    }
 
     installPrompt = null;
+
+    document.getElementById("installApp").style.display = "none";
 
 });

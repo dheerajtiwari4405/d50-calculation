@@ -711,219 +711,86 @@ td{
     }
 
 }
-/* ==========================================
+/* =====================================
         TOAST NOTIFICATION
-========================================== */
+===================================== */
 
 #toast{
+    position: fixed;          /* Screen par fix rahega */
+    top: 20px;
+    right: 20px;
+    z-index: 999999;          /* Sabse upar */
 
-    position:fixed;
+    min-width: 320px;
+    max-width: 420px;
 
-    top:25px;
+    padding: 16px 22px;
+    border-radius: 12px;
 
-    right:25px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
 
-    min-width:280px;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 
-    max-width:350px;
+    box-shadow: 0 10px 35px rgba(0,0,0,.35);
 
-    padding:15px 20px;
+    transform: translateX(450px);
+    transition: .20s ease;
 
-    border-radius:12px;
-
-    color:#fff;
-
-    font-size:16px;
-
-    font-weight:600;
-
-    opacity:0;
-
-    transform:translateX(120%);
-
-    transition:.4s ease;
-
-    z-index:99999;
-
-    box-shadow:0 10px 30px rgba(0,0,0,.35);
-
+    opacity: 0;
+    pointer-events: none;
 }
-
-/* Show Toast */
 
 #toast.show{
+    transform: translateX(0);
+    opacity: 1;
+}
 
-    opacity:1;
+#toast.success{
+    background: rgba(0,180,90,.9);
+}
 
-    transform:translateX(0);
+#toast.error{
+    background: rgba(220,53,69,.9);
+}
+
+#toast.warning{
+    background: rgba(255,193,7,.95);
+    color:#111;
+}
+
+#toast.info{
+    background: rgba(0,140,255,.9);
+}
+
+/* Mobile Responsive */
+
+@media(max-width:600px){
+
+    #toast{
+
+        left:15px;
+        right:15px;
+
+        top:15px;
+
+        min-width:auto;
+        max-width:none;
+
+        transform:translateY(-120px);
+
+    }
+
+    #toast.show{
+
+        transform:translateY(0);
+
+    }
 
 }
 
-/* Success */
-
-.toast-success{
-
-    background:linear-gradient(135deg,#00c853,#00e676);
-
-}
-
-/* Error */
-
-.toast-error{
-
-    background:linear-gradient(135deg,#d50000,#ff5252);
-
-}
-
-/* Warning */
-
-.toast-warning{
-
-    background:linear-gradient(135deg,#ff9800,#ffc107);
-
-}
-
-/* Info */
-
-.toast-info{
-
-    background:linear-gradient(135deg,#0288d1,#03a9f4);
-
-}
-
-/* ==========================================
-        THEME BUTTON
-========================================== */
-
-.theme-btn{
-
-    position:fixed;
-
-    top:20px;
-
-    right:20px;
-
-    padding:12px 20px;
-
-    border:none;
-
-    border-radius:30px;
-
-    cursor:pointer;
-
-    font-size:16px;
-
-    font-weight:bold;
-
-    color:#fff;
-
-    background:linear-gradient(135deg,#0072ff,#00c6ff);
-
-    box-shadow:0 8px 20px rgba(0,0,0,.25);
-
-    transition:.3s;
-
-    z-index:9999;
-
-}
-
-.theme-btn:hover{
-
-    transform:translateY(-3px);
-
-}
-
-
-/* ==========================================
-        SMOOTH TRANSITION
-========================================== */
-
-body,
-.card,
-.input-box,
-button,
-table,
-th,
-td{
-
-    transition:.4s;
-
-}
-
-
-/* ==========================================
-        DARK THEME
-========================================== */
-
-body.dark{
-
-    background:#0f172a;
-
-}
-
-body.dark .card{
-
-    background:rgba(20,30,48,.92);
-
-    color:#fff;
-
-}
-
-body.dark .card h2,
-body.dark .card h3,
-body.dark label{
-
-    color:#fff;
-
-}
-
-body.dark .input-box{
-
-    background:#1e293b;
-
-    color:#fff;
-
-    border:1px solid #3b82f6;
-
-}
-
-body.dark table{
-
-    color:#fff;
-
-}
-
-body.dark td{
-
-    background:#1e293b;
-
-    color:#fff;
-
-}
-
-body.dark th{
-
-    background:#2563eb;
-
-}
-
-body.dark .particle-box{
-
-    background:#1e293b;
-
-}
-
-body.dark .graph-card{
-
-    background:#1e293b;
-
-}
-
-body.dark .psd-result{
-
-    background:#1e293b;
-
-}
 .update-popup{
 
     position:fixed;
