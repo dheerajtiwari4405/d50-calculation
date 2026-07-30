@@ -43,14 +43,14 @@ function calculateD50() {
 
     if (mesh60.value.trim() === "") {
 
-        ashowToast("Please Enter 60 Mesh Value.", "warning");
+        showToast("Please Enter 60 Mesh Value.", "warning");
 
         mesh60.focus();
 
         return;
     }
 
-    showToast("Calculation Completed","success");
+    
 
 
     /* -----------------------------
@@ -68,7 +68,7 @@ function calculateD50() {
 
     if (isNaN(value35) || isNaN(value60)) {
 
-        showToast("Invalid Number","error");
+        showToast("❌ Please enter valid numeric values.", "error");
 
         return;
     }
@@ -82,7 +82,7 @@ function calculateD50() {
 
     if (denominator === 0) {
 
-        alert("35 Mesh and 60 Mesh Value Cannot Be Same.");
+        showToast("❌ 35 Mesh and 60 Mesh values cannot be the same.", "error");
 
         return;
     }
@@ -121,6 +121,7 @@ function calculateD50() {
     d50Result.innerHTML = `
         D50 : <span>${d50.toFixed(1)}</span>
     `;
+    showToast("Calculation Completed","success");
 
 }
 
@@ -197,7 +198,7 @@ function calculateMoisture() {
 
     if (firstWeightInput.value.trim() === "") {
 
-        alert("Please Enter First Weight.");
+        showToast("Please Enter First Weight." , "warning");
 
         firstWeightInput.focus();
 
@@ -206,7 +207,7 @@ function calculateMoisture() {
 
     if (secondWeightInput.value.trim() === "") {
 
-        alert("Please Enter Second Weight.");
+        showToast("Please Enter Second Weight." , "warning");
 
         secondWeightInput.focus();
 
@@ -229,7 +230,7 @@ function calculateMoisture() {
 
     if (isNaN(firstWeight) || isNaN(secondWeight)) {
 
-        alert("Please Enter Valid Numbers.");
+        showToast("❌ Please enter valid numeric values.", "error");
 
         return;
     }
@@ -241,7 +242,7 @@ function calculateMoisture() {
 
     if (firstWeight <= 0) {
 
-        alert("First Weight Must Be Greater Than Zero.");
+        showToast("❌ First Weight must be greater than 0.", "error");
 
         firstWeightInput.focus();
 
@@ -250,7 +251,7 @@ function calculateMoisture() {
 
     if (secondWeight > firstWeight) {
 
-        alert("Second Weight Cannot Be Greater Than First Weight.");
+       showToast("❌ Second Weight cannot be greater than First Weight.", "error");
 
         secondWeightInput.focus();
 
@@ -296,6 +297,7 @@ function calculateMoisture() {
     moistureResult.innerHTML = `
         Moisture : <span>${moisture.toFixed(2)} %</span>
     `;
+    showToast("✅ Moisture calculated successfully.", "success");
 
 }
 
@@ -387,6 +389,8 @@ function calculatePSDResult(){
 
         psdStatus.style.color="#00ff99";
 
+        showToast("✅ PSD calculation completed successfully.", "success");
+
     }
 
     else if(runningTotal < 100){
@@ -395,6 +399,8 @@ function calculatePSDResult(){
 
         psdStatus.style.color="#ffd43b";
 
+        showToast("⚠ Total retained is less than 100%.", "warning");
+
     }
 
     else{
@@ -402,6 +408,8 @@ function calculatePSDResult(){
         psdStatus.innerHTML="❌ Total Greater Than 100";
 
         psdStatus.style.color="#ff4d4d";
+
+        showToast("❌ Total retained cannot exceed 100%.", "error");
 
     }
     /* ==========================================
@@ -648,11 +656,13 @@ function resetAll(){
 
     retainedInputs.forEach(function(input){
 
-        input.value=0;
+        input.value="";
 
     });
 
     calculatePSDResult();
+
+    showToast("❌ Total retained cannot exceed 100%.", "error");
 
 }
 /* ==========================================
@@ -664,6 +674,8 @@ const printButton = document.getElementById("printReport");
 printButton.addEventListener("click",()=>{
 
     window.print();
+
+    showToast("🖨️ Report sent to printer.", "success");
 
 });
 /* ==========================================
@@ -811,5 +823,80 @@ themeButton.addEventListener("click",()=>{
         showToast("Light Mode Enabled","info");
 
     }
+
+});
+
+let newWorker;
+
+if ("serviceWorker" in navigator) {
+
+    navigator.serviceWorker.register("./service-worker.js")
+
+    .then(registration => {
+
+        registration.addEventListener("updatefound", () => {
+
+            newWorker = registration.installing;
+
+            newWorker.addEventListener("statechange", () => {
+
+                if (
+
+                    newWorker.state === "installed"
+
+                    && navigator.serviceWorker.controller
+
+                ) {
+
+                    document
+                    .getElementById("updatePopup")
+                    .style.display = "block";
+
+                }
+
+            });
+
+        });
+
+    });
+
+}
+
+document.getElementById("updateBtn").addEventListener("click", () => {
+
+    if(newWorker){
+
+        newWorker.postMessage("SKIP_WAITING");
+
+    }
+
+});
+
+navigator.serviceWorker.addEventListener("controllerchange", () => {
+
+    window.location.reload();
+
+});
+
+
+let installPrompt;
+
+window.addEventListener("beforeinstallprompt", (event) => {
+
+    event.preventDefault();
+
+    installPrompt = event;
+
+});
+
+document.getElementById("installApp").addEventListener("click", async () => {
+
+    if (!installPrompt) return;
+
+    installPrompt.prompt();
+
+    await installPrompt.userChoice;
+
+    installPrompt = null;
 
 });

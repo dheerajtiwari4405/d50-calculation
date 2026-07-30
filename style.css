@@ -188,9 +188,13 @@ body{
 
     text-align:center;
 
-    color:rgb(62, 39, 39);
+    color:rgb(217, 211, 211);
 
     margin-bottom:20px;
+
+    font-size: 20px;
+
+    font-style: bold;
 
 }
 
@@ -918,5 +922,42 @@ body.dark .graph-card{
 body.dark .psd-result{
 
     background:#1e293b;
+
+}
+.update-popup{
+
+    position:fixed;
+
+    left:50%;
+
+    bottom:20px;
+
+    transform:translateX(-50%);
+
+    width:330px;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    background:#1f2937;
+
+    color:white;
+
+    text-align:center;
+
+    display:none;
+
+    z-index:999999;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+
+}
+
+.update-popup button{
+
+    margin-top:15px;
+
+    width:100%;
 
 }

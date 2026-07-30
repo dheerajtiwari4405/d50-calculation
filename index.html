@@ -7,7 +7,11 @@
     ========================================== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    
+    <link rel="manifest" href="manifest.json">
+    
+    <meta name="theme-color" content="#2563eb">
+    
     <!-- Website Title -->
     <title>D50 Calculation System</title>
 
@@ -33,6 +37,11 @@
     <button id="themeToggle" class="theme-btn">
 
         🌙 Dark Mode
+
+    </button>
+    <button id="installApp" class="btn">
+
+    📲 Install App
 
     </button>
 
@@ -348,11 +357,26 @@
 
             <div id="toast"></div>
 
+             <div id="updatePopup" class="update-popup">
 
+    <h3>🚀 New Update Available</h3>
+
+    <p>
+        A new version of the app is ready.
+    </p>
+
+    <button id="updateBtn">
+
+        Update Now
+
+    </button>
+
+    </div>
  <!-- ==============================CHART.JS LIBRARY================================= -->
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                 <!-- JavaScript -->
         <script src="script.js"></script>
+       
 </body>
 </html>
