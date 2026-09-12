@@ -663,35 +663,110 @@ navigator.serviceWorker.addEventListener("controllerchange", () => {
   window.location.reload();
 });
 
+/* ==========================================
+        PWA INSTALL SYSTEM
+========================================== */
+
 let installPrompt = null;
 
+const installButton = document.getElementById("installApp");
+
+
+/* ==========================================
+        CHECK APP ALREADY INSTALLED
+========================================== */
+
+function checkAppInstalled() {
+
+    // Android / Chrome PWA
+    if (window.matchMedia("(display-mode: standalone)").matches) {
+
+        installButton.style.display = "none";
+
+        return true;
+    }
+
+    // iPhone / iPad PWA
+    if (window.navigator.standalone === true) {
+
+        installButton.style.display = "none";
+
+        return true;
+    }
+
+    return false;
+}
+
+
+/* ==========================================
+        INSTALL PROMPT AVAILABLE
+========================================== */
+
 window.addEventListener("beforeinstallprompt", (event) => {
-  event.preventDefault();
 
-  installPrompt = event;
+    event.preventDefault();
 
-  // Install button show karo
-  document.getElementById("installApp").style.display = "inline-flex";
+    installPrompt = event;
 
-  console.log("Install Available");
+    // Agar app already installed nahi hai tabhi button dikhao
+    if (!checkAppInstalled()) {
+
+        installButton.style.display = "inline-flex";
+
+    }
+
 });
 
-document.getElementById("installApp").addEventListener("click", async () => {
-  if (!installPrompt) {
-    alert("App Install Not Available Yet");
 
-    return;
-  }
+/* ==========================================
+        INSTALL BUTTON CLICK
+========================================== */
 
-  installPrompt.prompt();
+installButton.addEventListener("click", async () => {
 
-  const choice = await installPrompt.userChoice;
+    if (!installPrompt) {
 
-  if (choice.outcome === "accepted") {
-    console.log("Installed");
-  }
+        return;
 
-  installPrompt = null;
+    }
 
-  document.getElementById("installApp").style.display = "none";
+    installPrompt.prompt();
+
+    const choice = await installPrompt.userChoice;
+
+
+    if (choice.outcome === "accepted") {
+
+        console.log("App Installed");
+
+        // Install hone ke turant baad button hide
+        installButton.style.display = "none";
+
+    }
+
+
+    installPrompt = null;
+
 });
+
+
+/* ==========================================
+        APP INSTALLED EVENT
+========================================== */
+
+window.addEventListener("appinstalled", () => {
+
+    console.log("PWA Successfully Installed");
+
+    installButton.style.display = "none";
+
+    installPrompt = null;
+
+});
+
+
+/* ==========================================
+        PAGE LOAD CHECK
+========================================== */
+
+checkAppInstalled();
