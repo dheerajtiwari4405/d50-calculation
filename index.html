@@ -1,375 +1,282 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <!-- =========================================
          Basic Meta Information
     ========================================== -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel="manifest" href="manifest.json">
-    
-    <meta name="theme-color" content="#2563eb">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="icon" href="icons/icon-192.png">
-    
+    <link rel="manifest" href="manifest.json" />
+
+    <meta name="theme-color" content="#2563eb" />
+
+    <link rel="icon" href="icons/icon-192.png" />
+
     <!-- Website Title -->
     <title>D50 Calculation System</title>
 
     <!-- CSS File -->
-    <link rel="stylesheet" href="style.css">
-</head>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<body>
-
+  <body>
     <!-- =========================================
                 WEBSITE HEADER
     ========================================== -->
 
     <header class="main-header">
-        <h1>Welcome To Our Calculation System</h1>
-        <p>D50 • Moisture • PSD Sieve Analyzer</p>
+      <h1>Welcome To Our Lab Calculation System</h1>
+      <p>D50 • Moisture • PSD Sieve Analyzer</p>
     </header>
 
-    <button id="installApp" class="btn">
-
-    📲 Install App
-
-    </button>
+    <button id="installApp" class="btn">📲 Install App</button>
 
     <!-- =========================================
                 MAIN CONTAINER
     ========================================== -->
 
     <main class="wrapper">
-
-
-
-
-        <!-- =====================================
+      <!-- =====================================
                 SECTION 1 : D50 CALCULATION
         ====================================== -->
 
-        <section class="card">
+      <section class="card">
+        <h2 id="d50-show1">D50 Calculation</h2>
 
-            <h2 id="d50-show1">
-                D50 Calculation
-            </h2>
+        <!-- 35 Mesh -->
 
-            <!-- 35 Mesh -->
+        <div class="input-group">
+          <label for="input1"> 35 Mesh Value </label>
 
-            <div class="input-group">
+          <input
+            type="number"
+            id="input1"
+            class="input-box"
+            placeholder="Enter 35 Mesh Value"
+          />
+        </div>
 
-                <label for="input1">
-                    35 Mesh Value
-                </label>
+        <!-- 60 Mesh -->
 
-                <input
-                    type="number"
-                    id="input1"
-                    class="input-box"
-                    placeholder="Enter 35 Mesh Value">
+        <div class="input-group">
+          <label for="input2"> 60 Mesh Value </label>
 
-            </div>
+          <input
+            type="number"
+            id="input2"
+            class="input-box"
+            placeholder="Enter 60 Mesh Value"
+          />
+        </div>
 
+        <!-- Button -->
 
+        <button id="d50-button" class="btn">Calculate D50</button>
+      </section>
 
-            <!-- 60 Mesh -->
-
-            <div class="input-group">
-
-                <label for="input2">
-                    60 Mesh Value
-                </label>
-
-                <input
-                    type="number"
-                    id="input2"
-                    class="input-box"
-                    placeholder="Enter 60 Mesh Value">
-
-            </div>
-
-
-
-            <!-- Button -->
-
-            <button id="d50-button" class="btn">
-
-                Calculate D50
-
-            </button>
-
-        </section>
-
-
-
-
-
-
-        <!-- =====================================
+      <!-- =====================================
             SECTION 2 : MOISTURE CALCULATION
         ====================================== -->
 
-        <section class="card">
+      <section class="card">
+        <h2 id="d50-show2">Moisture Calculation</h2>
 
-            <h2 id="d50-show2">
+        <!-- First Weight -->
 
-                Moisture Calculation
+        <div class="input-group">
+          <label for="input1m"> First Weight </label>
 
-            </h2>
+          <input
+            type="number"
+            id="input1m"
+            class="input-box"
+            placeholder="Enter First Weight"
+          />
+        </div>
 
+        <!-- Second Weight -->
 
+        <div class="input-group">
+          <label for="input2m"> Second Weight </label>
 
-            <!-- First Weight -->
+          <input
+            type="number"
+            id="input2m"
+            class="input-box"
+            placeholder="Enter Second Weight"
+          />
+        </div>
 
-            <div class="input-group">
+        <!-- Button -->
 
-                <label for="input1m">
+        <button id="moisture-button" class="btn">Calculate Moisture</button>
+      </section>
 
-                    First Weight
-
-                </label>
-
-                <input
-                    type="number"
-                    id="input1m"
-                    class="input-box"
-                    placeholder="Enter First Weight">
-
-            </div>
-
-
-
-            <!-- Second Weight -->
-
-            <div class="input-group">
-
-                <label for="input2m">
-
-                    Second Weight
-
-                </label>
-
-                <input
-                    type="number"
-                    id="input2m"
-                    class="input-box"
-                    placeholder="Enter Second Weight">
-
-            </div>
-
-
-
-            <!-- Button -->
-
-            <button id="moisture-button" class="btn">
-
-                Calculate Moisture
-
-            </button>
-
-        </section>
-
-
-
-
-
-
-
-        <!-- =====================================
+      <!-- =====================================
                 SECTION 3 : PSD ANALYZER
         ====================================== -->
 
-        <section class="card table-card">
+      <section class="card table-card">
+        <h2>Pregel Starch PSD Sieve Analyzer</h2>
 
-            <h2>
+        <p class="subtitle">Enter % Retained Value & Click Calculate</p>
 
-                Pregel Starch PSD Sieve Analyzer
+        <!-- Table -->
 
-            </h2>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Mesh</th>
 
-            <p class="subtitle">
+                <th>% Retained</th>
 
-                Enter % Retained Value & Click Calculate
+                <th>Cumulative</th>
 
-            </p>
+                <th>% Passing</th>
+              </tr>
+            </thead>
 
+            <tbody id="sieve-table">
+              <tr>
+                <td>20</td>
+                <td>
+                  <input type="number" class="retained-input" value="0" />
+                </td>
+                <td class="cum-retained">0.00</td>
+                <td class="passing">100.00</td>
+              </tr>
 
+              <tr>
+                <td>30</td>
+                <td>
+                  <input type="number" class="retained-input" value="0" />
+                </td>
+                <td class="cum-retained">0.00</td>
+                <td class="passing">100.00</td>
+              </tr>
 
-            <!-- Table -->
+              <tr>
+                <td>35</td>
+                <td>
+                  <input type="number" class="retained-input" value="0" />
+                </td>
+                <td class="cum-retained">0.00</td>
+                <td class="passing">100.00</td>
+              </tr>
 
-            <div class="table-wrapper">
+              <tr>
+                <td>40</td>
+                <td>
+                  <input type="number" class="retained-input" value="0" />
+                </td>
+                <td class="cum-retained">0.00</td>
+                <td class="passing">100.00</td>
+              </tr>
 
-                <table>
+              <tr>
+                <td>50</td>
+                <td>
+                  <input type="number" class="retained-input" value="0" />
+                </td>
+                <td class="cum-retained">0.00</td>
+                <td class="passing">100.00</td>
+              </tr>
 
-                    <thead>
+              <tr>
+                <td>60</td>
+                <td>
+                  <input type="number" class="retained-input" value="0" />
+                </td>
+                <td class="cum-retained">0.00</td>
+                <td class="passing">100.00</td>
+              </tr>
 
-                        <tr>
+              <tr>
+                <td>100</td>
+                <td>
+                  <input type="number" class="retained-input" value="0" />
+                </td>
+                <td class="cum-retained">0.00</td>
+                <td class="passing">100.00</td>
+              </tr>
 
-                            <th>Mesh</th>
+              <tr>
+                <td>140</td>
+                <td>
+                  <input type="number" class="retained-input" value="0" />
+                </td>
+                <td class="cum-retained">0.00</td>
+                <td class="passing">100.00</td>
+              </tr>
 
-                            <th>% Retained</th>
+              <tr>
+                <td>200</td>
+                <td>
+                  <input type="number" class="retained-input" value="0" />
+                </td>
+                <td class="cum-retained">0.00</td>
+                <td class="passing">100.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-                            <th>Cumulative</th>
+        <!-- Calculate Button -->
 
-                            <th>% Passing</th>
+        <button id="calPSD" class="btn">Calculate PSD</button>
+        <!-- ============ PSD RESULT PANEL================= -->
 
-                        </tr>
+        <div class="psd-result" id="psd-result">
+          <h3>PSD Summary</h3>
 
-                    </thead>
+          <p>
+            <strong>Total Retained :</strong>
+            <span id="total-retained">0.00</span>%
+          </p>
 
+          <p>
+            <strong>Total Passing :</strong>
+            <span id="total-passing">100.00</span>%
+          </p>
 
+          <p>
+            <strong>Status :</strong> <span id="psd-status">Waiting...</span>
+          </p>
+        </div>
+        <!-- =============== PSD GRAPH========================== -->
 
-                    <tbody id="sieve-table">
+        <div class="graph-card">
+          <h3>PSD Analysis Graph</h3>
 
-                        <tr>
-                            <td>20</td>
-                            <td><input type="number" class="retained-input" value="0"></td>
-                            <td class="cum-retained">0.00</td>
-                            <td class="passing">100.00</td>
-                        </tr>
-
-                        <tr>
-                            <td>30</td>
-                            <td><input type="number" class="retained-input" value="0"></td>
-                            <td class="cum-retained">0.00</td>
-                            <td class="passing">100.00</td>
-                        </tr>
-
-                        <tr>
-                            <td>35</td>
-                            <td><input type="number" class="retained-input" value="0"></td>
-                            <td class="cum-retained">0.00</td>
-                            <td class="passing">100.00</td>
-                        </tr>
-
-                        <tr>
-                            <td>40</td>
-                            <td><input type="number" class="retained-input" value="0"></td>
-                            <td class="cum-retained">0.00</td>
-                            <td class="passing">100.00</td>
-                        </tr>
-
-                        <tr>
-                            <td>50</td>
-                            <td><input type="number" class="retained-input" value="0"></td>
-                            <td class="cum-retained">0.00</td>
-                            <td class="passing">100.00</td>
-                        </tr>
-
-                        <tr>
-                            <td>60</td>
-                            <td><input type="number" class="retained-input" value="0"></td>
-                            <td class="cum-retained">0.00</td>
-                            <td class="passing">100.00</td>
-                        </tr>
-
-                        <tr>
-                            <td>100</td>
-                            <td><input type="number" class="retained-input" value="0"></td>
-                            <td class="cum-retained">0.00</td>
-                            <td class="passing">100.00</td>
-                        </tr>
-
-                        <tr>
-                            <td>140</td>
-                            <td><input type="number" class="retained-input" value="0"></td>
-                            <td class="cum-retained">0.00</td>
-                            <td class="passing">100.00</td>
-                        </tr>
-
-                        <tr>
-                            <td>200</td>
-                            <td><input type="number" class="retained-input" value="0"></td>
-                            <td class="cum-retained">0.00</td>
-                            <td class="passing">100.00</td>
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-
-
-            <!-- Calculate Button -->
-
-            <button id="calPSD" class="btn">
-
-                Calculate PSD
-
-            </button>
-            <!-- ============ PSD RESULT PANEL================= -->
-
-            <div class="psd-result" id="psd-result">
-
-                <h3>PSD Summary</h3>
-
-                <p><strong>Total Retained :</strong> <span id="total-retained">0.00</span>%</p>
-
-                <p><strong>Total Passing :</strong> <span id="total-passing">100.00</span>%</p>
-
-                <p><strong>Status :</strong> <span id="psd-status">Waiting...</span></p>
-
-            </div>
-            <!-- =============== PSD GRAPH========================== -->
-
-            <div class="graph-card">
-
-                <h3>PSD Analysis Graph</h3>
-
-                <canvas id="psdChart"></canvas>
-
-            </div>
-            <button id="downloadGraph" class="btn">
-
-                Download Graph
-
-            </button>
-
-        </section>
-
+          <canvas id="psdChart"></canvas>
+        </div>
+        <button id="downloadGraph" class="btn">Download Graph</button>
+      </section>
     </main>
-                <!-- ============== EXTRA ACTION BUTTONS================ -->
+    <!-- ============== EXTRA ACTION BUTTONS================ -->
 
-            <div class="action-buttons">
+    <div class="action-buttons">
+      <button id="resetAll" class="btn">🔄 Reset All</button>
 
-                <button id="resetAll" class="btn">
-                    🔄 Reset All
-                </button>
-
-                <button id="printReport" class="btn">
-                    🖨 Print Report
-                </button>
-
-            </div>
-            <!-- =============== TOAST NOTIFICATION ================ -->
-
-            <div id="toast"></div>
-
-             <div id="updatePopup" class="update-popup">
-
-    <h3>🚀 New Update Available</h3>
-
-    <p>
-        A new version of the app is ready.
-    </p>
-
-    <button id="updateBtn">
-
-        Update Now
-
-    </button>
-
+      <button id="printReport" class="btn">🖨 Print Report</button>
     </div>
- <!-- ==============================CHART.JS LIBRARY================================= -->
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                <!-- JavaScript -->
-        <script src="script.js"></script>
-       
-</body>
+    <div id="updatePopup" class="update-popup">
+      <h3>🚀 New Update Available</h3>
+
+      <p>A new version of the app is ready.</p>
+
+      <button id="updateBtn">Update Now</button>
+    </div>
+
+    <div id="toast"></div>
+
+    <!-- ==============================CHART.JS LIBRARY================================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+  </body>
 </html>

@@ -19,112 +19,92 @@ const d50Button = document.getElementById("d50-button");
 */
 
 function calculateD50() {
-
-    /* -----------------------------
+  /* -----------------------------
         Input Values
     ------------------------------ */
 
-    const mesh35 = document.getElementById("input1");
-    const mesh60 = document.getElementById("input2");
+  const mesh35 = document.getElementById("input1");
+  const mesh60 = document.getElementById("input2");
 
-
-    /* -----------------------------
+  /* -----------------------------
         Empty Validation
     ------------------------------ */
 
-    if (mesh35.value.trim() === "") {
+  if (mesh35.value.trim() === "") {
+    showToast("Please Enter 35 Mesh Value.", "warning");
 
-        showToast("Please Enter 35 Mesh Value.", "warning");
+    mesh35.focus();
 
-        mesh35.focus();
+    return;
+  }
 
-        return;
-    }
+  if (mesh60.value.trim() === "") {
+    showToast("Please Enter 60 Mesh Value.", "warning");
 
-    if (mesh60.value.trim() === "") {
+    mesh60.focus();
 
-        showToast("Please Enter 60 Mesh Value.", "warning");
+    return;
+  }
 
-        mesh60.focus();
-
-        return;
-    }
-
-    
-
-
-    /* -----------------------------
+  /* -----------------------------
         String → Number
     ------------------------------ */
 
-    const value35 = parseFloat(mesh35.value);
+  const value35 = parseFloat(mesh35.value);
 
-    const value60 = parseFloat(mesh60.value);
+  const value60 = parseFloat(mesh60.value);
 
-
-    /* -----------------------------
+  /* -----------------------------
         Number Validation
     ------------------------------ */
 
-    if (isNaN(value35) || isNaN(value60)) {
+  if (isNaN(value35) || isNaN(value60)) {
+    showToast("❌ Please enter valid numeric values.", "error");
 
-        showToast("❌ Please enter valid numeric values.", "error");
+    return;
+  }
 
-        return;
-    }
-
-
-    /* -----------------------------
+  /* -----------------------------
         Denominator Check
     ------------------------------ */
 
-    const denominator = value35 - value60;
+  const denominator = value35 - value60;
 
-    if (denominator === 0) {
+  if (denominator === 0) {
+    showToast("❌ 35 Mesh and 60 Mesh values cannot be the same.", "error");
 
-        showToast("❌ 35 Mesh and 60 Mesh values cannot be the same.", "error");
+    return;
+  }
 
-        return;
-    }
-
-
-    /* ==================================================
+  /* ==================================================
             D50 Formula
     ================================================== */
 
-    const numerator = 50 - value60;
+  const numerator = 50 - value60;
 
-    const division = numerator / denominator;
+  const division = numerator / denominator;
 
-    const d50 = 250 + (250 * division);
+  const d50 = 250 + 250 * division;
 
-
-    /* ==================================================
+  /* ==================================================
             Result Color
     ================================================== */
 
-    if (d50 >= 0) {
+  if (d50 >= 0) {
+    d50Result.style.color = "#00ff88";
+  } else {
+    d50Result.style.color = "#ff4d4d";
+  }
 
-        d50Result.style.color = "#00ff88";
-
-    } else {
-
-        d50Result.style.color = "#ff4d4d";
-
-    }
-
-
-    /* ==================================================
+  /* ==================================================
             Show Result
     ================================================== */
 
-    d50Result.innerHTML = `
+  d50Result.innerHTML = `
         D50 : <span>${d50.toFixed(1)}</span>
     `;
-    showToast("Calculation Completed","success");
-
+  showToast("Calculation Completed", "success");
 }
-
 
 /*
 ==========================================================
@@ -134,7 +114,6 @@ function calculateD50() {
 
 d50Button.addEventListener("click", calculateD50);
 
-
 /*
 ==========================================================
         Enter Key Support
@@ -142,24 +121,15 @@ d50Button.addEventListener("click", calculateD50);
 */
 
 document.getElementById("input1").addEventListener("keydown", function (event) {
-
-    if (event.key === "Enter") {
-
-        calculateD50();
-
-    }
-
+  if (event.key === "Enter") {
+    calculateD50();
+  }
 });
 
-
 document.getElementById("input2").addEventListener("keydown", function (event) {
-
-    if (event.key === "Enter") {
-
-        calculateD50();
-
-    }
-
+  if (event.key === "Enter") {
+    calculateD50();
+  }
 });
 /* ==========================================================
                 MOISTURE CALCULATION SECTION
@@ -183,7 +153,6 @@ const firstWeightInput = document.getElementById("input1m");
 // Second Weight Input
 const secondWeightInput = document.getElementById("input2m");
 
-
 /*
 ==========================================================
         Moisture Calculate Function
@@ -191,116 +160,91 @@ const secondWeightInput = document.getElementById("input2m");
 */
 
 function calculateMoisture() {
-
-    /* -----------------------------------
+  /* -----------------------------------
             Empty Validation
     ------------------------------------ */
 
-    if (firstWeightInput.value.trim() === "") {
+  if (firstWeightInput.value.trim() === "") {
+    showToast("Please Enter First Weight.", "warning");
 
-        showToast("Please Enter First Weight." , "warning");
+    firstWeightInput.focus();
 
-        firstWeightInput.focus();
+    return;
+  }
 
-        return;
-    }
+  if (secondWeightInput.value.trim() === "") {
+    showToast("Please Enter Second Weight.", "warning");
 
-    if (secondWeightInput.value.trim() === "") {
+    secondWeightInput.focus();
 
-        showToast("Please Enter Second Weight." , "warning");
+    return;
+  }
 
-        secondWeightInput.focus();
-
-        return;
-    }
-
-
-    /* -----------------------------------
+  /* -----------------------------------
             Convert String to Number
     ------------------------------------ */
 
-    const firstWeight = parseFloat(firstWeightInput.value);
+  const firstWeight = parseFloat(firstWeightInput.value);
 
-    const secondWeight = parseFloat(secondWeightInput.value);
+  const secondWeight = parseFloat(secondWeightInput.value);
 
-
-    /* -----------------------------------
+  /* -----------------------------------
             Number Validation
     ------------------------------------ */
 
-    if (isNaN(firstWeight) || isNaN(secondWeight)) {
+  if (isNaN(firstWeight) || isNaN(secondWeight)) {
+    showToast("❌ Please enter valid numeric values.", "error");
 
-        showToast("❌ Please enter valid numeric values.", "error");
+    return;
+  }
 
-        return;
-    }
-
-
-    /* -----------------------------------
+  /* -----------------------------------
             Logical Validation
     ------------------------------------ */
 
-    if (firstWeight <= 0) {
+  if (firstWeight <= 0) {
+    showToast("❌ First Weight must be greater than 0.", "error");
 
-        showToast("❌ First Weight must be greater than 0.", "error");
+    firstWeightInput.focus();
 
-        firstWeightInput.focus();
+    return;
+  }
 
-        return;
-    }
+  if (secondWeight > firstWeight) {
+    showToast("❌ Second Weight cannot be greater than First Weight.", "error");
 
-    if (secondWeight > firstWeight) {
+    secondWeightInput.focus();
 
-       showToast("❌ Second Weight cannot be greater than First Weight.", "error");
+    return;
+  }
 
-        secondWeightInput.focus();
-
-        return;
-    }
-
-
-    /* -----------------------------------
+  /* -----------------------------------
             Moisture Formula
     ------------------------------------ */
 
-    const moisture =
-        ((firstWeight - secondWeight) / firstWeight) * 100;
+  const moisture = ((firstWeight - secondWeight) / firstWeight) * 100;
 
-
-    /* -----------------------------------
+  /* -----------------------------------
             Result Color
     ------------------------------------ */
 
-    if (moisture <= 10) {
+  if (moisture <= 10) {
+    moistureResult.style.color = "#00ff99";
+  } else if (moisture <= 15) {
+    moistureResult.style.color = "#ffd43b";
+  } else {
+    moistureResult.style.color = "#ff4d4d";
+  }
 
-        moistureResult.style.color = "#00ff99";
-
-    }
-
-    else if (moisture <= 15) {
-
-        moistureResult.style.color = "#ffd43b";
-
-    }
-
-    else {
-
-        moistureResult.style.color = "#ff4d4d";
-
-    }
-
-
-    /* -----------------------------------
+  /* -----------------------------------
             Show Result
     ------------------------------------ */
 
-    moistureResult.innerHTML = `
+  moistureResult.innerHTML = `
         Moisture : <span>${moisture.toFixed(2)} %</span>
     `;
-    showToast("✅ Moisture calculated successfully.", "success");
-
+  showToast("✅ Moisture calculated successfully.", "success");
 }
-
 
 /*
 ==========================================================
@@ -310,7 +254,6 @@ function calculateMoisture() {
 
 moistureButton.addEventListener("click", calculateMoisture);
 
-
 /*
 ==========================================================
         Enter Key Support
@@ -318,24 +261,15 @@ moistureButton.addEventListener("click", calculateMoisture);
 */
 
 firstWeightInput.addEventListener("keydown", function (event) {
-
-    if (event.key === "Enter") {
-
-        calculateMoisture();
-
-    }
-
+  if (event.key === "Enter") {
+    calculateMoisture();
+  }
 });
 
-
 secondWeightInput.addEventListener("keydown", function (event) {
-
-    if (event.key === "Enter") {
-
-        calculateMoisture();
-
-    }
-
+  if (event.key === "Enter") {
+    calculateMoisture();
+  }
 });
 /* =====================================================
                 PSD ANALYZER
@@ -355,95 +289,72 @@ const totalPassing = document.getElementById("total-passing");
 
 const psdStatus = document.getElementById("psd-status");
 
+function calculatePSDResult() {
+  let runningTotal = 0;
 
-function calculatePSDResult(){
+  for (let i = 0; i < retainedInputs.length; i++) {
+    const retained = parseFloat(retainedInputs[i].value) || 0;
 
-    let runningTotal = 0;
+    runningTotal += retained;
 
-    for(let i = 0; i < retainedInputs.length; i++){
+    cumulativeCells[i].innerHTML = runningTotal.toFixed(2);
 
-        const retained = parseFloat(retainedInputs[i].value) || 0;
+    let passing = 100 - runningTotal;
 
-        runningTotal += retained;
+    passing = Math.max(0, Math.min(100, passing));
 
-        cumulativeCells[i].innerHTML = runningTotal.toFixed(2);
+    passingCells[i].innerHTML = passing.toFixed(2);
+  }
 
-        let passing = 100 - runningTotal;
+  totalRetained.innerHTML = runningTotal.toFixed(2);
 
-        passing = Math.max(0, Math.min(100, passing));
+  totalPassing.innerHTML = (100 - runningTotal).toFixed(2);
 
-        passingCells[i].innerHTML = passing.toFixed(2);
+  if (runningTotal === 100) {
+    psdStatus.innerHTML = "✅ Perfect (100%)";
 
-    }
+    psdStatus.style.color = "#00ff99";
 
-    totalRetained.innerHTML = runningTotal.toFixed(2);
+    showToast("✅ PSD calculation completed successfully.", "success");
+  } else if (runningTotal < 100) {
+    psdStatus.innerHTML = "⚠ Remaining Value Missing";
 
-    totalPassing.innerHTML = (100-runningTotal).toFixed(2);
+    psdStatus.style.color = "#ffd43b";
 
+    showToast("⚠ Total retained is less than 100%.", "warning");
+  } else {
+    psdStatus.innerHTML = "❌ Total Greater Than 100";
 
+    psdStatus.style.color = "#ff4d4d";
 
-
-    if(runningTotal === 100){
-
-        psdStatus.innerHTML="✅ Perfect (100%)";
-
-        psdStatus.style.color="#00ff99";
-
-        showToast("✅ PSD calculation completed successfully.", "success");
-
-    }
-
-    else if(runningTotal < 100){
-
-        psdStatus.innerHTML="⚠ Remaining Value Missing";
-
-        psdStatus.style.color="#ffd43b";
-
-        showToast("⚠ Total retained is less than 100%.", "warning");
-
-    }
-
-    else{
-
-        psdStatus.innerHTML="❌ Total Greater Than 100";
-
-        psdStatus.style.color="#ff4d4d";
-
-        showToast("❌ Total retained cannot exceed 100%.", "error");
-
-    }
-    /* ==========================================
+    showToast("❌ Total retained cannot exceed 100%.", "error");
+  }
+  /* ==========================================
         UPDATE GRAPH
 ========================================== */
 
-const graphValues = [];
+  const graphValues = [];
 
-passingCells.forEach((cell) => {
-
+  passingCells.forEach((cell) => {
     graphValues.push(parseFloat(cell.innerHTML));
+  });
 
-});
+  psdChart.data.datasets[0].data = graphValues;
 
-psdChart.data.datasets[0].data = graphValues;
-
-psdChart.update();
-
+  psdChart.update();
 }
-
 
 /* ======================================
         Button Event
 ====================================== */
 
-calculatePSD.addEventListener("click",calculatePSDResult);
+calculatePSD.addEventListener("click", calculatePSDResult);
 
 /* ==========================================
         PREMIUM PSD CHART
 ========================================== */
 
-const ctx = document
-    .getElementById("psdChart")
-    .getContext("2d");
+const ctx = document.getElementById("psdChart").getContext("2d");
 
 /* Gradient Line */
 
@@ -453,171 +364,125 @@ gradient.addColorStop(0, "#00e5ff");
 gradient.addColorStop(0.5, "#00c853");
 gradient.addColorStop(1, "#2962ff");
 
-
 const psdChart = new Chart(ctx, {
+  type: "line",
 
-    type: "line",
+  data: {
+    labels: ["20", "30", "35", "40", "50", "60", "100", "140", "200"],
 
-    data: {
+    datasets: [
+      {
+        label: "% Passing",
 
-        labels: [
-            "20",
-            "30",
-            "35",
-            "40",
-            "50",
-            "60",
-            "100",
-            "140",
-            "200"
-        ],
+        data: [100, 100, 100, 100, 100, 100, 100, 100, 100],
 
-        datasets: [{
+        borderColor: gradient,
 
-            label: "% Passing",
+        backgroundColor: "rgba(0,180,255,.20)",
 
-            data: [100,100,100,100,100,100,100,100,100],
+        borderWidth: 4,
 
-            borderColor: gradient,
+        fill: true,
 
-            backgroundColor: "rgba(0,180,255,.20)",
+        tension: 0.45,
 
-            borderWidth: 4,
+        pointRadius: 6,
 
-            fill: true,
+        pointHoverRadius: 9,
 
-            tension: .45,
+        pointBackgroundColor: "#ffffff",
 
-            pointRadius: 6,
+        pointBorderColor: "#0088ff",
 
-            pointHoverRadius: 9,
+        pointBorderWidth: 3,
+      },
+    ],
+  },
 
-            pointBackgroundColor: "#ffffff",
+  options: {
+    responsive: true,
 
-            pointBorderColor: "#0088ff",
+    maintainAspectRatio: false,
 
-            pointBorderWidth: 3
+    animation: {
+      duration: 1800,
 
-        }]
-
+      easing: "easeInOutQuart",
     },
 
-    options: {
+    interaction: {
+      intersect: false,
 
-        responsive: true,
+      mode: "index",
+    },
 
-        maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: {
+          font: {
+            size: 15,
 
-        animation: {
-
-            duration: 1800,
-
-            easing: "easeInOutQuart"
-
+            weight: "bold",
+          },
         },
+      },
 
-        interaction: {
+      tooltip: {
+        backgroundColor: "#222",
 
-            intersect: false,
+        titleColor: "#fff",
 
-            mode: "index"
+        bodyColor: "#fff",
 
+        padding: 12,
+      },
+    },
+
+    scales: {
+      y: {
+        min: 0,
+
+        max: 100,
+
+        title: {
+          display: true,
+
+          text: "% Passing",
         },
+      },
 
-        plugins: {
+      x: {
+        title: {
+          display: true,
 
-            legend: {
-
-                labels: {
-
-                    font: {
-
-                        size: 15,
-
-                        weight: "bold"
-
-                    }
-
-                }
-
-            },
-
-            tooltip: {
-
-                backgroundColor: "#222",
-
-                titleColor: "#fff",
-
-                bodyColor: "#fff",
-
-                padding: 12
-
-            }
-
+          text: "Mesh Size",
         },
-
-        scales: {
-
-            y: {
-
-                min: 0,
-
-                max: 100,
-
-                title: {
-
-                    display: true,
-
-                    text: "% Passing"
-
-                }
-
-            },
-
-            x: {
-
-                title: {
-
-                    display: true,
-
-                    text: "Mesh Size"
-
-                }
-
-            }
-
-        }
-
-    }
-
+      },
+    },
+  },
 });
 /* ==========================================
         DOWNLOAD GRAPH
 ========================================== */
 
-const downloadGraph =
-document.getElementById("downloadGraph");
+const downloadGraph = document.getElementById("downloadGraph");
 
 downloadGraph.addEventListener("click", () => {
+  const link = document.createElement("a");
 
-    const link = document.createElement("a");
+  link.download = "PSD_Graph.png";
 
-    link.download = "PSD_Graph.png";
+  link.href = psdChart.toBase64Image();
 
-    link.href = psdChart.toBase64Image();
-
-    link.click();
-
+  link.click();
 });
 
 /* ======================================
         Auto Calculate
 ====================================== */
 
-retainedInputs.forEach(function(input){
-
-    input.addEventListener("input",calculatePSDResult);
-
+retainedInputs.forEach(function (input) {
+  input.addEventListener("input", calculatePSDResult);
 });
 
 /* ==========================================
@@ -628,42 +493,36 @@ const resetButton = document.getElementById("resetAll");
 
 resetButton.addEventListener("click", resetAll);
 
-function resetAll(){
+function resetAll() {
+  /* D50 */
 
-    /* D50 */
+  document.getElementById("input1").value = "";
 
-    document.getElementById("input1").value="";
+  document.getElementById("input2").value = "";
 
-    document.getElementById("input2").value="";
+  d50Result.innerHTML = "D50 Calculation";
 
-    d50Result.innerHTML="D50 Calculation";
+  d50Result.style.color = "white";
 
-    d50Result.style.color="white";
+  /* Moisture */
 
+  document.getElementById("input1m").value = "";
 
-    /* Moisture */
+  document.getElementById("input2m").value = "";
 
-    document.getElementById("input1m").value="";
+  moistureResult.innerHTML = "Moisture Calculation";
 
-    document.getElementById("input2m").value="";
+  moistureResult.style.color = "white";
 
-    moistureResult.innerHTML="Moisture Calculation";
+  /* PSD */
 
-    moistureResult.style.color="white";
+  retainedInputs.forEach(function (input) {
+    input.value = "";
+  });
 
+  calculatePSDResult();
 
-    /* PSD */
-
-    retainedInputs.forEach(function(input){
-
-        input.value="";
-
-    });
-
-    calculatePSDResult();
-
-    showToast("❌ Total retained cannot exceed 100%.", "error");
-
+  showToast("❌ Total retained cannot exceed 100%.", "error");
 }
 /* ==========================================
         PRINT REPORT
@@ -671,63 +530,42 @@ function resetAll(){
 
 const printButton = document.getElementById("printReport");
 
-printButton.addEventListener("click",()=>{
+printButton.addEventListener("click", () => {
+  window.print();
 
-    window.print();
-
-    showToast("🖨️ Report sent to printer.", "success");
-
+  showToast("🖨️ Report sent to printer.", "success");
 });
 /* ==========================================
         AUTO SAVE
 ========================================== */
 
-const allInputs=document.querySelectorAll("input");
+const allInputs = document.querySelectorAll("input");
 
-allInputs.forEach(function(input){
-
-    input.addEventListener("input",()=>{
-
-        localStorage.setItem(input.id || input.className,input.value);
-
-    });
-
+allInputs.forEach(function (input) {
+  input.addEventListener("input", () => {
+    localStorage.setItem(input.id || input.className, input.value);
+  });
 });
 
+window.addEventListener("load", () => {
+  allInputs.forEach(function (input) {
+    let value = localStorage.getItem(input.id || input.className);
 
-window.addEventListener("load",()=>{
-
-    allInputs.forEach(function(input){
-
-        let value=localStorage.getItem(input.id || input.className);
-
-        if(value!==null){
-
-            input.value=value;
-
-        }
-
-    });
-
+    if (value !== null) {
+      input.value = value;
+    }
+  });
 });
-function markInput(input,isValid){
+function markInput(input, isValid) {
+  input.classList.remove("success");
 
-    input.classList.remove("success");
+  input.classList.remove("error");
 
-    input.classList.remove("error");
-
-    if(isValid){
-
-        input.classList.add("success");
-
-    }
-
-    else{
-
-        input.classList.add("error");
-
-    }
-
+  if (isValid) {
+    input.classList.add("success");
+  } else {
+    input.classList.add("error");
+  }
 }
 /* ==========================================
         TOAST FUNCTION
@@ -736,132 +574,97 @@ function markInput(input,isValid){
 const toast = document.getElementById("toast");
 
 function showToast(message, type = "info") {
+  toast.innerHTML = message;
 
-    toast.innerHTML = message;
+  toast.className = "";
 
-    toast.className = "";
+  toast.classList.add("show");
 
-    toast.classList.add("show");
+  switch (type) {
+    case "success":
+      toast.classList.add("toast-success");
+      break;
 
-    switch (type) {
+    case "error":
+      toast.classList.add("toast-error");
+      break;
 
-        case "success":
-            toast.classList.add("toast-success");
-            break;
+    case "warning":
+      toast.classList.add("toast-warning");
+      break;
 
-        case "error":
-            toast.classList.add("toast-error");
-            break;
+    default:
+      toast.classList.add("toast-info");
+  }
 
-        case "warning":
-            toast.classList.add("toast-warning");
-            break;
-
-        default:
-            toast.classList.add("toast-info");
-
-    }
-
-    setTimeout(() => {
-
-        toast.classList.remove("show");
-
-    }, 3000);
-
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000);
 }
 
-showToast("Welcome To Lab Calculation","success");
+showToast("Welcome To Lab Calculation", "success");
 
 let newWorker;
 
 if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("./service-worker.js")
 
-    navigator.serviceWorker.register("./service-worker.js")
+    .then((registration) => {
+      registration.addEventListener("updatefound", () => {
+        newWorker = registration.installing;
 
-    .then(registration => {
-
-        registration.addEventListener("updatefound", () => {
-
-            newWorker = registration.installing;
-
-            newWorker.addEventListener("statechange", () => {
-
-                if (
-
-                    newWorker.state === "installed"
-
-                    && navigator.serviceWorker.controller
-
-                ) {
-
-                    document
-                    .getElementById("updatePopup")
-                    .style.display = "block";
-
-                }
-
-            });
-
+        newWorker.addEventListener("statechange", () => {
+          if (
+            newWorker.state === "installed" &&
+            navigator.serviceWorker.controller
+          ) {
+            document.getElementById("updatePopup").style.display = "block";
+          }
         });
-
+      });
     });
-
 }
 
 document.getElementById("updateBtn").addEventListener("click", () => {
-
-    if(newWorker){
-
-        newWorker.postMessage("SKIP_WAITING");
-
-    }
-
+  if (newWorker) {
+    newWorker.postMessage("SKIP_WAITING");
+  }
 });
 
 navigator.serviceWorker.addEventListener("controllerchange", () => {
-
-    window.location.reload();
-
+  window.location.reload();
 });
-
 
 let installPrompt = null;
 
 window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
 
-    event.preventDefault();
+  installPrompt = event;
 
-    installPrompt = event;
+  // Install button show karo
+  document.getElementById("installApp").style.display = "inline-flex";
 
-    // Install button show karo
-    document.getElementById("installApp").style.display = "inline-flex";
-
-    console.log("Install Available");
-
+  console.log("Install Available");
 });
 
 document.getElementById("installApp").addEventListener("click", async () => {
+  if (!installPrompt) {
+    alert("App Install Not Available Yet");
 
-    if (!installPrompt) {
+    return;
+  }
 
-        alert("App Install Not Available Yet");
+  installPrompt.prompt();
 
-        return;
+  const choice = await installPrompt.userChoice;
 
-    }
+  if (choice.outcome === "accepted") {
+    console.log("Installed");
+  }
 
-    installPrompt.prompt();
+  installPrompt = null;
 
-    const choice = await installPrompt.userChoice;
-
-    if (choice.outcome === "accepted") {
-
-        console.log("Installed");
-
-    }
-
-    installPrompt = null;
-
-    document.getElementById("installApp").style.display = "none";
-
+  document.getElementById("installApp").style.display = "none";
 });
