@@ -1,4 +1,4 @@
-const CACHE_NAME = "lab-calculator-v1";
+const CACHE_NAME = "lab-calculator-v2";
 
 const FILES = ["./", "./index.html", "./style.css", "./script.js"];
 

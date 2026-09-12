@@ -596,7 +596,6 @@ function showToast(message, type = "info") {
     default:
       toast.classList.add("toast-info");
   }
-
   setTimeout(() => {
     toast.classList.remove("show");
   }, 3000);
@@ -604,13 +603,19 @@ function showToast(message, type = "info") {
 
 showToast("Welcome To Lab Calculation", "success");
 
-let newWorker;
+/* ==========================================
+        PWA UPDATE SYSTEM
+========================================== */
+
+let newWorker = null;
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker
     .register("./service-worker.js")
 
     .then((registration) => {
+      console.log("Service Worker Registered");
+
       registration.addEventListener("updatefound", () => {
         newWorker = registration.installing;
 
@@ -623,8 +628,30 @@ if ("serviceWorker" in navigator) {
           }
         });
       });
+    })
+
+    .catch((error) => {
+      console.error("Service Worker Error:", error);
     });
 }
+
+/* ==========================================
+        UPDATE NOW BUTTON
+========================================== */
+
+document.getElementById("updateBtn").addEventListener("click", () => {
+  if (newWorker) {
+    newWorker.postMessage("SKIP_WAITING");
+  }
+});
+
+/* ==========================================
+        RELOAD AFTER UPDATE
+========================================== */
+
+navigator.serviceWorker.addEventListener("controllerchange", () => {
+  window.location.reload();
+});
 
 document.getElementById("updateBtn").addEventListener("click", () => {
   if (newWorker) {
